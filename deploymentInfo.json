@@ -1,0 +1,10 @@
+{
+  "1": {
+    "contract": "RaffleBotPass",
+    "address": "0x71B4BfA8cA6B39406659887fA17e02DA5fF729Df"
+  },
+  "2": {
+    "contract": "RBPRentalPlace",
+    "address": "0xE2395bEfE99F1cA7cA86bC9e5dE8e68F1175dB99"
+  }
+}
