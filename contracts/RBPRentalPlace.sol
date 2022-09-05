@@ -55,6 +55,7 @@ contract RBPRentalPlace is Ownable {
      * charges 2% fees
      */
     function acceptLease(uint256 _tokenId) public payable {
+        require(raffleBotPass.ownerOf(_tokenId) != msg.sender, "RBPRentalPlace.acceptLease: Cannot rent token of yourself");
         require(leases[_tokenId].expiresInDays != 0, "RentalPlace.acceptLease: the token is not for rent");
         uint256 rent = leases[_tokenId].rent;
         require(msg.value >= rent, "RentalPlace.acceptLease: insufficient ethers");
@@ -65,13 +66,13 @@ contract RBPRentalPlace is Ownable {
         raffleBotPass.setUser(_tokenId, msg.sender, expires, rent);
 
         uint256 fee = msg.value * 2 / 100;
-        uint256 accountPayable = msg.value - fee;
+        uint256 ownerIncome = msg.value - fee;
         address payable tokenOwner = payable(raffleBotPass.ownerOf(_tokenId));
         
         // lease is taken, so remove it
         delete leases[_tokenId];
 
-        (bool success, ) = tokenOwner.call{value: accountPayable}("");
+        (bool success, ) = tokenOwner.call{value: ownerIncome}("");
         require(success, "RentalPlace.acceptLease: transfer ether to owner failed");
     }
 
