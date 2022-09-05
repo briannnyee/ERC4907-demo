@@ -185,7 +185,7 @@ describe("RaffleBotPass", () => {
         const { deployer, raffleBotPass, tokenIdSet } = await loadFixture(userSetFixture);
         
         await expect(raffleBotPass.revokeUser(tokenIdSet))
-          .to.be.revertedWith("ERC4907: transfer caller is not owner nor approved");
+          .to.be.revertedWith("ERC4907: caller is not owner nor approved");
       })
 
       it("Owner should be able to revoke user if user has been set", async () => {

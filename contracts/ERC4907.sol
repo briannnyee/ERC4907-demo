@@ -38,7 +38,7 @@ abstract contract ERC4907 is ERC721, IERC4907, AccessControl {
     /// @param user  The new user of the NFT
     /// @param expires  UNIX timestamp, The new user could use the NFT before expires
     function setUser(uint256 tokenId, address user, uint64 expires) public {
-        require(_isApprovedOrOwner(msg.sender, tokenId), "ERC4907: transfer caller is not owner nor approved");
+        require(_isApprovedOrOwner(msg.sender, tokenId), "ERC4907: caller is not owner nor approved");
         require(userOf(tokenId) == address(0), "ERC4907: double renting");
 
         uint64 starts = uint64(block.timestamp);
@@ -55,7 +55,7 @@ abstract contract ERC4907 is ERC721, IERC4907, AccessControl {
     /// Throws if `tokenId` is not valid NFT
     /// charges 1% fee
     function revokeUser(uint256 tokenId) public payable {
-        require(_isApprovedOrOwner(msg.sender, tokenId), "ERC4907: transfer caller is not owner nor approved");
+        require(_isApprovedOrOwner(msg.sender, tokenId), "ERC4907: caller is not owner nor approved");
         
         address user = userOf(tokenId);
         require(user != address(0), "ERC4907: token is not in use");
